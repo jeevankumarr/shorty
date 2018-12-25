@@ -4,7 +4,9 @@ import random
 from app.forms import UrlForm
 from app.models import URL
 from flask import render_template, request, redirect, abort
+from key_gen import KeyGenService
 
+kgs = KeyGenService()
 #@app.route('/index', methods=['POST', 'GET'])
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -17,9 +19,10 @@ def index():
         if not exists:
             print('New Code is ', code)
             return code
-    code = gen()
+    code = None
     while code is None:
-        code = gen()
+        #code = gen()
+        code = kgs.get_code()
     
     if request.method == 'POST' and code is not None:
         form = UrlForm(request.form)
@@ -59,3 +62,16 @@ def stats(page=1):
 @app.errorhandler(404)
 def page_not_found():
     return render_template('404.html'), 404
+
+class KeyGenService():
+    def __init__():
+        pass
+    def get_code():
+        chars = string.ascii_letters + string.digits
+        length = 3
+        code = ''.join(random.choice(chars) for x in range(length))
+        print('verifying', code)
+        exists = db.session.query(db.exists().where(URL.short_url == code)).scalar()
+        if not exists:
+            print('New Code is ', code)
+        return code
