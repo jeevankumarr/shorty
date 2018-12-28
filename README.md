@@ -7,4 +7,4 @@
 4. Integrates with Postgresql uses flask-migrate to manage migrations
 5. Added tests for models
 
-Credit: GlowSquid: A lot of the code is forked from GlowSquid
+Credit: GlowSquid
